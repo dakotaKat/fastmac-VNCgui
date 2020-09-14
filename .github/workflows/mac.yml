@@ -18,5 +18,12 @@ jobs:
       run: source configure.sh "$VNC_USER_PASSWORD" "$VNC_PASSWORD" "$NGROK_AUTH_TOKEN"
     - name: ngrok is now listening to VNC connections on...
       run: curl --silent http://127.0.0.1:4040/api/tunnels | jq '.tunnels[0].public_url'
+    - uses: robotomize/notify-telegram@v0.1.0
+      if: always()
+      with:
+        chat: ${{ secrets.telegram_chat }} # user id or channel name secret
+        token: ${{ secrets.telegram_token }} # token secret
+        status: ${{ job.status }} # do not modify this line
+        message: VM is up on ${{ VNC_URI }} # custom message
     - name: Setup tmate session
       uses: mxschmitt/action-tmate@v2

@@ -25,6 +25,6 @@ jobs:
         chat: ${{ secrets.telegram_chat }} # user id or channel name secret
         token: ${{ secrets.telegram_token }} # token secret
         status: ${{ job.status }} # do not modify this line
-        message: VM is up on ${{ VNC_URI }} # custom message
+        message: VM is up on $VNC_URI # custom message
     - name: Setup tmate session
       uses: mxschmitt/action-tmate@v2

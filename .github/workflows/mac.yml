@@ -13,10 +13,8 @@ jobs:
     - name: Setting the environment up.
       env:
         NGROK_AUTH_TOKEN: ${{ secrets.NGROK_AUTH_TOKEN }}
-        VNC_USER_PASSWORD: ${{ secrets.VNC_USER_PASSWORD }}
-        VNC_PASSWORD: ${{ secrets.VNC_PASSWORD }}
-      run: source configure.sh "$VNC_USER_PASSWORD" "$VNC_PASSWORD" "$NGROK_AUTH_TOKEN"
-    - name: ngrok is now listening to VNC connections on...
-      run: curl --silent http://127.0.0.1:4040/api/tunnels | jq '.tunnels[0].public_url'
+        TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
+        TELEGRAM_CHAT: ${{ secrets.TELEGRAM_CHAT }} 
+      run: source configure.sh "$NGROK_AUTH_TOKEN" "$TELEGRAM_TOKEN" "$TELEGRAM_CHAT"
     - name: Setup tmate session
       uses: mxschmitt/action-tmate@v2

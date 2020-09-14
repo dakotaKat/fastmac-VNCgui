@@ -9,10 +9,6 @@ jobs:
   build:
     runs-on: macos-latest
     steps:
-    - uses: fastai/workflows/ssh@master
-      with:
-        ssh_key: ${{ secrets.SSH_KEY }}
-        key_file: id_ecdsa
     - uses: actions/checkout@v2
     - run: source script-mac.sh
     - name: set up ngrok auth
@@ -20,8 +16,6 @@ jobs:
         NGROK_AUTH_TOKEN: ${{ secrets.NGROK_AUTH_TOKEN }} 
       run: ngrok authtoken "$NGROK_AUTH_TOKEN"
     - name: set up ngrok 5900
-      run: ngrok tcp 5900 &
-    - name: you can vnc to...
-      run: curl --silent http://127.0.0.1:4040/api/tunnels | jq '.tunnels[0].public_url'
+      run: ngrok tcp 5900 &; curl --silent http://127.0.0.1:4040/api/tunnels | jq '.tunnels[0].public_url'
     - name: Setup tmate session
       uses: mxschmitt/action-tmate@v2
